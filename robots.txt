@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://aperiosonus.com/sitemap.xml
