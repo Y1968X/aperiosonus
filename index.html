@@ -51,7 +51,8 @@
     "url": "https://aperiosonus.com"
   },
   "sameAs": [
-    "https://www.youtube.com/@AperioSonus"
+    "https://www.youtube.com/@AperioSonus",
+    "https://www.tiktok.com/@aperiosonus"
   ],
   "image": "https://aperiosonus.com/assets/hero-pitagorica.jpg"
 }
@@ -116,6 +117,9 @@
     border-bottom:1px solid var(--line);
   }
   .nav-in{display:flex;align-items:center;justify-content:space-between;height:86px}
+  .nav-links{display:flex;align-items:center;gap:12px}
+  .tt:hover{border-color:rgba(227,168,58,.5);color:#fff;box-shadow:0 0 24px rgba(227,168,58,.16)}
+  .tt:hover svg{fill:var(--gold)}
   .brand{display:flex;align-items:center;gap:13px}
   /* Logo PNG con mix-blend-mode:screen — il bianco scompare sul nero */
   .brand-logo{
@@ -247,15 +251,9 @@
     transition:opacity .6s var(--ease),transform .6s var(--ease),border-color .5s var(--ease),box-shadow .6s var(--ease);
     will-change:transform,opacity;
   }
-  .card:nth-child(1){transition-delay:.06s}
-  .card:nth-child(2){transition-delay:.14s}
-  .card:nth-child(3){transition-delay:.22s}
-  .card:nth-child(4){transition-delay:.08s}
-  .card:nth-child(5){transition-delay:.16s}
-  .card:nth-child(6){transition-delay:.24s}
-  .card:nth-child(7){transition-delay:.1s}
-  .card:nth-child(8){transition-delay:.18s}
-  .card:nth-child(9){transition-delay:.26s}
+  .card:nth-child(3n+1){transition-delay:.06s}
+  .card:nth-child(3n+2){transition-delay:.14s}
+  .card:nth-child(3n){transition-delay:.22s}
   .card.is-v{opacity:1;transform:translateY(0)}
   .card img{width:100%;height:100%;object-fit:cover;transition:transform 1.2s var(--ease),filter .6s var(--ease);filter:saturate(.92) brightness(.92)}
   .card .veil{position:absolute;inset:0;background:linear-gradient(180deg,transparent 38%,rgba(0,0,0,.35) 70%,rgba(0,0,0,.86));transition:opacity .5s var(--ease)}
@@ -272,8 +270,17 @@
   .card:hover .corner{opacity:1}
   .card .scan{position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .5s var(--ease);background:linear-gradient(180deg,transparent,rgba(52,227,210,.06));mix-blend-mode:screen}
   .card:hover .scan{opacity:1}
-  .card .play-hint{display:none}
+  .card .play-hint{
+    display:none;position:absolute;top:50%;left:50%;z-index:2;pointer-events:none;
+    width:52px;height:52px;border-radius:50%;align-items:center;justify-content:center;
+    background:rgba(0,0,0,.42);border:1px solid rgba(255,255,255,.2);backdrop-filter:blur(6px);
+    opacity:.88;transform:translate(-50%,-50%);transition:opacity .3s var(--ease),transform .3s var(--ease);
+  }
+  .card .play-hint svg{width:20px;height:20px;fill:#fff;margin-left:2px}
+  .card.has-video .play-hint{display:flex}
+  .card:hover .play-hint{opacity:1;transform:translate(-50%,-50%) scale(1.08)}
   .card:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
+  body.lb-locked{overflow:hidden}
 
   /* ── LIGHTBOX ── */
   .lb{
@@ -325,6 +332,8 @@
     aspect-ratio:9/16;
     object-fit:cover;
   }
+  /* Le riprese dallo schermo del telefono sono 1080x2412 (non un 9:16 pulito) — niente crop */
+  .lb-media video{aspect-ratio:1080/2412;object-fit:contain;background:#000}
   .lb-media .lb-img{
     display:block;
     max-height:80vh;
@@ -347,6 +356,7 @@
   .lb-title{font-family:'Space Grotesk',sans-serif;font-weight:400;font-size:clamp(20px,2.6vw,30px);margin-top:10px;line-height:1.1;letter-spacing:-.01em}
   .lb-entitle{display:block;margin-top:8px;color:var(--muted);font-size:13.5px;font-weight:300}
   .lb-mem{display:block;margin-top:12px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.12em;color:var(--gold)}
+  .lb-credit{display:block;margin-top:8px;font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.06em;color:var(--muted)}
   .lb-yt{
     display:inline-flex;align-items:center;gap:8px;margin-top:28px;
     font-family:'JetBrains Mono',monospace;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;
@@ -380,6 +390,9 @@
   }
   .btn-yt-big svg{width:20px;height:20px;fill:currentColor;flex:none}
   .btn-yt-big:hover{transform:translateY(-3px);box-shadow:0 14px 48px rgba(52,227,210,.32)}
+  .btn-yt-big.gold{background:var(--gold);color:#1a1204}
+  .btn-yt-big.gold:hover{box-shadow:0 14px 48px rgba(227,168,58,.32)}
+  .cta-btn-row{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
 
   /* ── CTA ── */
   .cta{border-top:1px solid var(--line);text-align:center}
@@ -418,6 +431,10 @@
   .foot-links a:hover{color:var(--cyan)}
   .foot-links a svg{width:14px;height:14px;fill:currentColor}
   .copy{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.14em;color:var(--muted);text-transform:uppercase}
+  .credits-note{border-top:1px solid var(--line);padding:20px 0 32px;font-family:'JetBrains Mono',monospace;
+    font-size:10.5px;letter-spacing:.03em;color:var(--faint);line-height:1.7;text-transform:none}
+  .credits-note a{color:var(--muted);text-decoration:underline;text-underline-offset:2px}
+  .credits-note a:hover{color:var(--cyan-dim)}
 
   /* ── scroll reveal ── */
   .reveal{
@@ -447,7 +464,8 @@
     .hero-visual{max-width:440px;margin:0 auto;order:-1}
     .man-grid{grid-template-columns:1fr;gap:48px}
     .grid{grid-template-columns:repeat(2,1fr)}
-    .lb-wrap{flex-direction:column;align-items:center;padding:52px 20px 24px;gap:24px}
+    .lb-wrap{flex-direction:column;flex-wrap:nowrap;align-items:center;padding:52px 20px 24px;gap:24px;
+      max-height:none;overflow-y:auto;-webkit-overflow-scrolling:touch}
     .lb-info{max-width:min(360px,90vw);text-align:center;transform:translateY(14px);flex:none}
     .lb.open .lb-info{transform:none}
     .lb-ring,.lb-ring.r2{display:none}
@@ -483,11 +501,17 @@
     <a class="brand" href="#top" aria-label="AperioSonus — torna in cima">
       <img class="brand-logo" src="assets/AperiosonusLogosemplice.png" alt="AperioSonus" />
     </a>
-    <!-- Sostituisci href con il tuo link YouTube reale -->
-    <a class="yt" href="https://www.youtube.com/@AperioSonus" target="_blank" rel="noopener" aria-label="Guarda AperioSonus su YouTube">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.6 15.6V8.4l6.2 3.6z"/></svg>
-      <span>Guarda&nbsp;su&nbsp;YouTube</span>
-    </a>
+    <div class="nav-links">
+      <!-- Sostituisci href con il tuo link YouTube reale -->
+      <a class="yt" href="https://www.youtube.com/@AperioSonus" target="_blank" rel="noopener" aria-label="Guarda AperioSonus su YouTube">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.6 15.6V8.4l6.2 3.6z"/></svg>
+        <span>Guarda&nbsp;su&nbsp;YouTube</span>
+      </a>
+      <a class="yt tt" href="https://www.tiktok.com/@aperiosonus" target="_blank" rel="noopener" aria-label="Segui AperioSonus su TikTok">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.6 5.82c-1.36-1.15-2.11-2.82-2.15-4.82H11.4v12.4a2.59 2.59 0 0 1-2.59 2.5c-1.42 0-2.6-1.16-2.6-2.6 0-1.72 1.66-3.01 3.37-2.48V7.66c-3.45-.46-6.47 2.22-6.47 5.64 0 3.33 2.76 5.7 5.69 5.7 3.14 0 5.69-2.55 5.69-5.7V9.01a7.35 7.35 0 0 0 4.3 1.38V7.3c-.83.02-1.66-.24-2.32-.7-.24-.16-.47-.35-.67-.55Z"/></svg>
+        <span>Segui&nbsp;su&nbsp;TikTok</span>
+      </a>
+    </div>
   </div>
 </header>
 
@@ -581,6 +605,190 @@
 
         <article class="card"
           role="button" tabindex="0"
+          aria-label="Apri: Ogni volta che canta, disegna questo"
+          data-sig="SIG·22"
+          data-mode="Interferenza Complessa"
+          data-title="Ogni volta che canta, disegna questo"
+          data-en="Every time this bird sings, it draws this shape"
+          data-credit="🎵 Video-Audio: Usignolo (CC BY – BAO THO ADVENTURE)"
+          data-img="assets/poster-usignolo-ognivolta.jpg"
+          data-video="assets/videos/usignolo-ognivolta.mp4">
+          <img src="assets/poster-usignolo-ognivolta.jpg" alt="Mandala geometrico generato dal canto dell'usignolo" loading="lazy" />
+          <span class="veil"></span><span class="scan"></span>
+          <span class="corner">SIG·22</span>
+          <span class="play-hint"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
+          <div class="meta">
+            <span class="mode">Interferenza Complessa</span>
+            <h3>Ogni volta che canta, disegna questo</h3>
+            <span class="en">Every time this bird sings, it draws this shape</span>
+          </div>
+        </article>
+
+        <article class="card"
+          role="button" tabindex="0"
+          aria-label="Apri: L'architettura della melodia perfetta"
+          data-sig="SIG·23"
+          data-mode="Armonia Pitagorica"
+          data-title="L'architettura della melodia perfetta"
+          data-en="The architecture of the perfect melody"
+          data-img="assets/poster-usignolo-perfetta.jpg"
+          data-video="assets/videos/usignolo-perfetta.mp4">
+          <img src="assets/poster-usignolo-perfetta.jpg" alt="Costellazione geometrica generata dal canto dell'usignolo" loading="lazy" />
+          <span class="veil"></span><span class="scan"></span>
+          <span class="corner">SIG·23</span>
+          <span class="play-hint"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
+          <div class="meta">
+            <span class="mode">Armonia Pitagorica</span>
+            <h3>L'architettura della melodia perfetta</h3>
+            <span class="en">The architecture of the perfect melody</span>
+          </div>
+        </article>
+
+        <article class="card"
+          role="button" tabindex="0"
+          aria-label="Apri: La geometria invisibile del Merlo"
+          data-sig="SIG·24"
+          data-mode="Costellazione del Canto"
+          data-title="La geometria invisibile del Merlo"
+          data-en="The blackbird's song is invisible geometry — a flute-like melody"
+          data-img="assets/poster-merlo-geometria.jpg"
+          data-video="assets/videos/merlo-geometria.mp4">
+          <img src="assets/poster-merlo-geometria.jpg" alt="Costellazione geometrica generata dal canto del merlo" loading="lazy" />
+          <span class="veil"></span><span class="scan"></span>
+          <span class="corner">SIG·24</span>
+          <span class="play-hint"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
+          <div class="meta">
+            <span class="mode">Costellazione del Canto</span>
+            <h3>La geometria invisibile del Merlo</h3>
+            <span class="en">The blackbird's song is invisible geometry — a flute-like melody</span>
+          </div>
+        </article>
+
+        <article class="card"
+          role="button" tabindex="0"
+          aria-label="Apri: Il canto che disegna un mandala"
+          data-sig="SIG·25"
+          data-mode="Costellazione del Canto"
+          data-title="Il canto che disegna un mandala"
+          data-en="You've never seen a nightingale's song draw a mandala — until now"
+          data-img="assets/poster-usignolo-mandala.jpg"
+          data-video="assets/videos/usignolo-mandala.mp4">
+          <img src="assets/poster-usignolo-mandala.jpg" alt="Mandala di costellazione generato dal canto dell'usignolo" loading="lazy" />
+          <span class="veil"></span><span class="scan"></span>
+          <span class="corner">SIG·25</span>
+          <span class="play-hint"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
+          <div class="meta">
+            <span class="mode">Costellazione del Canto</span>
+            <h3>Il canto che disegna un mandala</h3>
+            <span class="en">You've never seen a nightingale's song draw a mandala — until now</span>
+          </div>
+        </article>
+
+        <article class="card"
+          role="button" tabindex="0"
+          aria-label="Apri: Lo stesso suono, mai visto così"
+          data-sig="SIG·26"
+          data-mode="Costellazione del Canto"
+          data-title="Lo stesso suono, mai visto così"
+          data-en="You've heard this sound a thousand times, but never seen it like this"
+          data-credit="🎵 Video-Audio: Usignolo (CC BY – BAO THO ADVENTURE)"
+          data-img="assets/poster-usignolo-maivista.jpg"
+          data-video="assets/videos/usignolo-maivista.mp4">
+          <img src="assets/poster-usignolo-maivista.jpg" alt="Costellazione geometrica generata dal canto dell'usignolo" loading="lazy" />
+          <span class="veil"></span><span class="scan"></span>
+          <span class="corner">SIG·26</span>
+          <span class="play-hint"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
+          <div class="meta">
+            <span class="mode">Costellazione del Canto</span>
+            <h3>Lo stesso suono, mai visto così</h3>
+            <span class="en">You've heard this sound a thousand times, but never seen it like this</span>
+          </div>
+        </article>
+
+        <article class="card"
+          role="button" tabindex="0"
+          aria-label="Apri: Il Merlo, nota per nota"
+          data-sig="SIG·27"
+          data-mode="Partitura delle Altezze"
+          data-title="Il Merlo, nota per nota"
+          data-en="The blackbird's song, one note at a time"
+          data-img="assets/poster-merlo-note.jpg"
+          data-video="assets/videos/merlo-note.mp4">
+          <img src="assets/poster-merlo-note.jpg" alt="Le note del canto del merlo tracciate su un rigo di altezze" loading="lazy" />
+          <span class="veil"></span><span class="scan"></span>
+          <span class="corner">SIG·27</span>
+          <span class="play-hint"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
+          <div class="meta">
+            <span class="mode">Partitura delle Altezze</span>
+            <h3>Il Merlo, nota per nota</h3>
+            <span class="en">The blackbird's song, one note at a time</span>
+          </div>
+        </article>
+
+        <article class="card"
+          role="button" tabindex="0"
+          aria-label="Apri: La natura parla in geometria"
+          data-sig="SIG·28"
+          data-mode="Campo Caotico"
+          data-title="La natura parla in geometria"
+          data-en="Did you know nature speaks in geometry?"
+          data-img="assets/poster-teaser-natura.jpg"
+          data-video="assets/videos/teaser-natura.mp4">
+          <img src="assets/poster-teaser-natura.jpg" alt="Forma solida generata da un suono naturale" loading="lazy" />
+          <span class="veil"></span><span class="scan"></span>
+          <span class="corner">SIG·28</span>
+          <span class="play-hint"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
+          <div class="meta">
+            <span class="mode">Campo Caotico</span>
+            <h3>La natura parla in geometria</h3>
+            <span class="en">Did you know nature speaks in geometry?</span>
+          </div>
+        </article>
+
+        <article class="card"
+          role="button" tabindex="0"
+          aria-label="Apri: Guarda fino alla fine"
+          data-sig="SIG·29"
+          data-mode="Scia Luminosa"
+          data-title="Guarda fino alla fine"
+          data-en="Watch this until the end — it's worth it"
+          data-img="assets/poster-teaser-finale.jpg"
+          data-video="assets/videos/teaser-finale.mp4">
+          <img src="assets/poster-teaser-finale.jpg" alt="Scia luminosa a spirale generata da un suono" loading="lazy" />
+          <span class="veil"></span><span class="scan"></span>
+          <span class="corner">SIG·29</span>
+          <span class="play-hint"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
+          <div class="meta">
+            <span class="mode">Scia Luminosa</span>
+            <h3>Guarda fino alla fine</h3>
+            <span class="en">Watch this until the end — it's worth it</span>
+          </div>
+        </article>
+
+        <article class="card"
+          role="button" tabindex="0"
+          aria-label="Apri: Indovina quale uccello"
+          data-sig="SIG·30"
+          data-mode="Scia Luminosa"
+          data-title="Indovina quale uccello"
+          data-en="Guess which bird created this geometry"
+          data-img="assets/poster-teaser-indovina.jpg"
+          data-video="assets/videos/teaser-indovina.mp4">
+          <img src="assets/poster-teaser-indovina.jpg" alt="Scia luminosa a nastro generata da un canto" loading="lazy" />
+          <span class="veil"></span><span class="scan"></span>
+          <span class="corner">SIG·30</span>
+          <span class="play-hint"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
+          <div class="meta">
+            <span class="mode">Scia Luminosa</span>
+            <h3>Indovina quale uccello</h3>
+            <span class="en">Guess which bird created this geometry</span>
+          </div>
+        </article>
+
+        <!-- Catture fotografiche -->
+
+        <article class="card" hidden
+          role="button" tabindex="0"
           aria-label="Apri: La firma del Canarino"
           data-sig="SIG·01"
           data-mode="Interferenza Complessa"
@@ -602,7 +810,7 @@
           </div>
         </article>
 
-        <article class="card"
+        <article class="card" hidden
           role="button" tabindex="0"
           aria-label="Apri: La geometria del Vento"
           data-sig="SIG·02"
@@ -623,7 +831,7 @@
           </div>
         </article>
 
-        <article class="card"
+        <article class="card" hidden
           role="button" tabindex="0"
           aria-label="Apri: Il canto dell'Usignolo"
           data-sig="SIG·03"
@@ -644,7 +852,7 @@
           </div>
         </article>
 
-        <article class="card"
+        <article class="card" hidden
           role="button" tabindex="0"
           aria-label="Apri: Il richiamo del Pettirosso"
           data-sig="SIG·04"
@@ -665,7 +873,7 @@
           </div>
         </article>
 
-        <article class="card"
+        <article class="card" hidden
           role="button" tabindex="0"
           aria-label="Apri: La voce del Merlo"
           data-sig="SIG·05"
@@ -686,7 +894,7 @@
           </div>
         </article>
 
-        <article class="card"
+        <article class="card" hidden
           role="button" tabindex="0"
           aria-label="Apri: L'eco del Tordo"
           data-sig="SIG·06"
@@ -707,7 +915,7 @@
           </div>
         </article>
 
-        <article class="card"
+        <article class="card" hidden
           role="button" tabindex="0"
           aria-label="Apri: Il sussurro del Fringuello"
           data-sig="SIG·07"
@@ -728,7 +936,7 @@
           </div>
         </article>
 
-        <article class="card"
+        <article class="card" hidden
           role="button" tabindex="0"
           aria-label="Apri: La geometria della Pioggia"
           data-sig="SIG·08"
@@ -749,7 +957,7 @@
           </div>
         </article>
 
-        <article class="card"
+        <article class="card" hidden
           role="button" tabindex="0"
           aria-label="Apri: La Pioggia — secondo movimento"
           data-sig="SIG·09"
@@ -769,6 +977,9 @@
             <span class="en">Rain — second movement</span>
           </div>
         </article>
+
+        <!-- Archivio: 12 varianti quasi identiche (carillon + campana), nascoste dalla vista principale ma non cancellate -->
+        <div id="archive-cards" hidden>
 
         <article class="card"
           role="button" tabindex="0"
@@ -1022,6 +1233,9 @@
           </div>
         </article>
 
+        </div>
+        <!-- /Archivio -->
+
       </div>
     </div>
   </section>
@@ -1030,7 +1244,7 @@
   <section class="cta sec-pad" id="youtube" data-screen-label="YouTube">
     <div class="wrap">
       <div class="cta-inner">
-        <span class="eyebrow reveal">Il canale · The channel</span>
+        <span class="eyebrow reveal">I canali · The channels</span>
 
         <!-- Titolo e testo bilingue -->
         <div class="cta-bilingual reveal d1">
@@ -1044,18 +1258,48 @@
           </div>
         </div>
 
-        <!-- Bottone centrato -->
-        <div class="reveal d2" style="margin-top:48px">
+        <!-- Bottoni centrati -->
+        <div class="reveal d2 cta-btn-row" style="margin-top:48px">
           <a class="btn-yt-big" href="https://www.youtube.com/@AperioSonus" target="_blank" rel="noopener">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.6 15.6V8.4l6.2 3.6z"/></svg>
             Apri il canale YouTube
           </a>
+          <a class="btn-yt-big gold" href="https://www.tiktok.com/@aperiosonus" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.6 5.82c-1.36-1.15-2.11-2.82-2.15-4.82H11.4v12.4a2.59 2.59 0 0 1-2.59 2.5c-1.42 0-2.6-1.16-2.6-2.6 0-1.72 1.66-3.01 3.37-2.48V7.66c-3.45-.46-6.47 2.22-6.47 5.64 0 3.33 2.76 5.7 5.69 5.7 3.14 0 5.69-2.55 5.69-5.7V9.01a7.35 7.35 0 0 0 4.3 1.38V7.3c-.83.02-1.66-.24-2.32-.7-.24-.16-.47-.35-.67-.55Z"/></svg>
+            Seguici su TikTok
+          </a>
         </div>
-        <div class="cta-note reveal d2" style="margin-top:28px">Mandala sonori dal vivo · Geometria in tempo reale · Early viewers</div>
+        <div class="cta-note reveal d2" style="margin-top:28px">Mandala sonori dal vivo · Geometria in tempo reale · 50K+ views su TikTok</div>
       </div>
     </div>
   </section>
 </main>
+
+<!-- LIGHTBOX -->
+<div class="lb" id="lb" aria-hidden="true">
+  <div class="lb-backdrop" id="lbBackdrop"></div>
+  <button class="lb-close" id="lbClose" type="button" aria-label="Chiudi">✕</button>
+  <div class="lb-wrap">
+    <div class="lb-frame">
+      <span class="lb-ring"></span>
+      <span class="lb-ring r2"></span>
+      <div class="lb-media" id="lbMedia"></div>
+    </div>
+    <div class="lb-info">
+      <span class="lb-sig mono" id="lbSig"></span>
+      <span class="lb-mode" id="lbMode"></span>
+      <h3 class="lb-title" id="lbTitle"></h3>
+      <span class="lb-entitle" id="lbEntitle"></span>
+      <span class="lb-mem" id="lbMem"></span>
+      <span class="lb-credit" id="lbCredit"></span>
+      <a class="lb-yt" id="lbLink" href="#" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.6 15.6V8.4l6.2 3.6z"/></svg>
+        <span id="lbLinkLabel">Guarda il video intero</span>
+      </a>
+      <span class="lb-dismiss" id="lbDismiss">Chiudi ✕</span>
+    </div>
+  </div>
+</div>
 
 <!-- FOOTER -->
 <footer data-screen-label="Footer">
@@ -1069,12 +1313,22 @@
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.6 15.6V8.4l6.2 3.6z"/></svg>
         YouTube
       </a>
+      <a href="https://www.tiktok.com/@aperiosonus" target="_blank" rel="noopener" aria-label="TikTok AperioSonus">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.6 5.82c-1.36-1.15-2.11-2.82-2.15-4.82H11.4v12.4a2.59 2.59 0 0 1-2.59 2.5c-1.42 0-2.6-1.16-2.6-2.6 0-1.72 1.66-3.01 3.37-2.48V7.66c-3.45-.46-6.47 2.22-6.47 5.64 0 3.33 2.76 5.7 5.69 5.7 3.14 0 5.69-2.55 5.69-5.7V9.01a7.35 7.35 0 0 0 4.3 1.38V7.3c-.83.02-1.66-.24-2.32-.7-.24-.16-.47-.35-.67-.55Z"/></svg>
+        TikTok
+      </a>
       <a href="mailto:info@aperiosonus.com" aria-label="Scrivici">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg>
         info@aperiosonus.com
       </a>
     </div>
     <div class="copy">© Massimo · Giugno 2026</div>
+  </div>
+  <div class="wrap">
+    <div class="credits-note">
+      Ogni fonte esterna usata in questo sito è citata nella scheda del video corrispondente. Se pensi che manchi una citazione, <a href="mailto:info@aperiosonus.com">scrivici</a> e la correggiamo subito.<br>
+      Every external source used on this site is credited on its video card. If you believe we missed one, <a href="mailto:info@aperiosonus.com">get in touch</a> and we'll fix it right away.
+    </div>
   </div>
 </footer>
 
@@ -1110,6 +1364,114 @@ if (heroFrame && !matchMedia('(prefers-reduced-motion:reduce)').matches) {
   targets.forEach(el => obs.observe(el));
 })();
 
+// ── GALLERY LIGHTBOX ─────────────────────────────────────────────────────────
+(function () {
+  const cards = Array.from(document.querySelectorAll('.card'));
+  const lb = document.getElementById('lb');
+  if (!lb || !cards.length) return;
+
+  const media   = document.getElementById('lbMedia');
+  const sig     = document.getElementById('lbSig');
+  const mode    = document.getElementById('lbMode');
+  const title   = document.getElementById('lbTitle');
+  const entitle = document.getElementById('lbEntitle');
+  const mem     = document.getElementById('lbMem');
+  const credit  = document.getElementById('lbCredit');
+  const link    = document.getElementById('lbLink');
+  const closeBtn  = document.getElementById('lbClose');
+  const backdrop  = document.getElementById('lbBackdrop');
+  const dismissEl = document.getElementById('lbDismiss');
+
+  let lastFocused = null;
+
+  // Mark cards that actually launch a video, so the play icon only shows there.
+  cards.forEach(card => {
+    if (card.dataset.video || card.dataset.youtube) card.classList.add('has-video');
+  });
+
+  function clearMedia() { media.innerHTML = ''; }
+
+  function fillMedia(card) {
+    const videoSrc = card.dataset.video;
+    const ytId     = card.dataset.youtube;
+    const imgSrc   = card.dataset.img;
+
+    if (videoSrc) {
+      const v = document.createElement('video');
+      v.src = videoSrc;
+      v.controls = true;
+      v.autoplay = true;
+      v.muted = true;       // autoplay reliably on mobile; visitor can unmute
+      v.loop = true;
+      v.playsInline = true;
+      media.appendChild(v);
+    } else if (ytId) {
+      const f = document.createElement('iframe');
+      f.src = `https://www.youtube.com/embed/${ytId}?autoplay=1&rel=0&playsinline=1`;
+      f.allow = 'autoplay; encrypted-media; picture-in-picture';
+      f.allowFullscreen = true;
+      f.setAttribute('title', card.dataset.title || 'AperioSonus');
+      media.appendChild(f);
+    } else if (imgSrc) {
+      const img = document.createElement('img');
+      img.className = 'lb-img';
+      img.src = imgSrc;
+      img.alt = card.querySelector('img')?.alt || card.dataset.title || '';
+      media.appendChild(img);
+    }
+  }
+
+  function openCard(card) {
+    lastFocused = document.activeElement;
+    clearMedia();
+    fillMedia(card);
+
+    sig.textContent   = card.dataset.sig   || '';
+    mode.textContent  = card.dataset.mode  || '';
+    title.textContent = card.dataset.title || '';
+    entitle.textContent = card.dataset.en  || '';
+
+    if (card.dataset.mem) { mem.textContent = card.dataset.mem; mem.style.display = ''; }
+    else { mem.style.display = 'none'; }
+
+    if (card.dataset.credit) { credit.textContent = card.dataset.credit; credit.style.display = ''; }
+    else { credit.style.display = 'none'; }
+
+    const outLink = card.dataset.link || (card.dataset.youtube ? `https://youtu.be/${card.dataset.youtube}` : '');
+    if (outLink) { link.href = outLink; link.style.display = ''; }
+    else { link.style.display = 'none'; }
+
+    lb.classList.add('open');
+    lb.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('lb-locked');
+    closeBtn.focus();
+    document.addEventListener('keydown', onKeydown);
+  }
+
+  function closeLb() {
+    lb.classList.remove('open');
+    lb.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('lb-locked');
+    clearMedia(); // stops video/iframe playback immediately
+    document.removeEventListener('keydown', onKeydown);
+    if (lastFocused && lastFocused.focus) lastFocused.focus();
+  }
+
+  function onKeydown(e) {
+    if (e.key === 'Escape') closeLb();
+  }
+
+  cards.forEach(card => {
+    card.addEventListener('click', () => openCard(card));
+    card.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openCard(card); }
+    });
+  });
+
+  closeBtn.addEventListener('click', closeLb);
+  backdrop.addEventListener('click', closeLb);
+  dismissEl.addEventListener('click', closeLb);
+})();
 
 </script>
 </body>
